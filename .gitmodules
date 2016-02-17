@@ -1,6 +1,3 @@
 [submodule "lib/Cinder"]
 	path = lib/Cinder
 	url = https://github.com/sosolimited/Cinder.git
-[submodule "lib/Cinder-Asio"]
-	path = lib/Cinder-Asio
-	url = https://github.com/BanTheRewind/Cinder-Asio.git
