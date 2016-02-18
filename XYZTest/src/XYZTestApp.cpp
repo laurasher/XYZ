@@ -1,3 +1,5 @@
+
+#include "CinderImGui.h"
 #include "UdpServer.h"
 #include "array"
 #include "asio/asio.hpp"
@@ -49,6 +51,7 @@ void XYZTestApp::prepareSettings(Settings *settings)
 
 void XYZTestApp::setup()
 {
+    ui::initialize();
     _udpServer = UdpServer::instance(io_service());
 
     _udpServer->open(10552);
@@ -75,6 +78,20 @@ void XYZTestApp::update()
     for (auto i : xyz) {
         cout << i << endl;
     }
+    //draw gui
+    ui::ScopedWindow window("Accelerometer Measurements");
+
+    stringstream ss;
+    ss << std::fixed << std::setprecision(3) << xyz.front() << "m/s^2";
+    std::vector<float> x(1);
+    x[0] = xyz[0];
+    std::vector<float> y(1);
+    y[0] = xyz[1];
+    std::vector<float> z(1);
+    z[0] = xyz[2];
+    ui::PlotLines("X Accel", x.data(), x.size(), 0, ss.str().c_str(), -3.0f, 3.0f);
+    ui::PlotLines("Y Accel", y.data(), y.size(), 0, ss.str().c_str(), -3.0f, 3.0f);
+    ui::PlotLines("Z Accel", z.data(), z.size(), 0, ss.str().c_str(), -3.0f, 3.0f);
 }
 
 void XYZTestApp::draw()
@@ -84,12 +101,12 @@ void XYZTestApp::draw()
     //Simple accel vector plot
     gl::color(Color(0.0f, 1.0f, 0.0f));
     float headLength = 8.0f;
-    float headRadius = 8.0f;
+    float headRadius = 6.0f;
 
     int mag = 500;
-    int xorigin = 400;
-    int yorigin = 300;
-    gl::drawVector(ivec3(xorigin, yorigin, 0), ivec3(xorigin + mag * xyz[2], yorigin + mag * xyz[1], mag * xyz[0]), headLength, headRadius);
+    int xorigin = 600;
+    int yorigin = 600;
+    gl::drawVector(ivec3(xorigin, yorigin, 0), ivec3(xorigin + mag * xyz[2], yorigin + mag * xyz[1], 0), headLength, headRadius);
 }
 
 CINDER_APP(XYZTestApp, RendererGl)

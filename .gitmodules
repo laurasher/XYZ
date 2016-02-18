@@ -1,3 +1,6 @@
 [submodule "lib/Cinder"]
 	path = lib/Cinder
 	url = https://github.com/sosolimited/Cinder.git
+[submodule "Cinder-ImGui"]
+	path = Cinder-ImGui
+	url = https://github.com/sansumbrella/Cinder-ImGui.git
