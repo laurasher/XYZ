@@ -1,12 +1,13 @@
+#include "UdpServer.h"
+#include "array"
 #include "asio/asio.hpp"
 #include "cinder/Log.h"
 #include "cinder/System.h"
+#include "cinder/Utilities.h"
 #include "cinder/app/App.h"
 #include "cinder/app/RendererGl.h"
 #include "cinder/gl/gl.h"
 #include "cinder/params/Params.h"
-
-#include "UdpServer.h"
 
 using namespace ci;
 using namespace ci::app;
@@ -14,14 +15,13 @@ using namespace std;
 using asio::ip::udp;
 using namespace soso;
 
+std::vector<string> xyz(3); //should probably convert to float
+
 class XYZTestApp : public App {
 public:
     void setup() override;
     void update() override;
     void draw() override;
-    //    udp::socket *socket;
-    //    udp::endpoint *receiver_endpoint;
-    //    char recv_buffer[1024];
 
 private:
     ci::Font mFont;
@@ -40,16 +40,23 @@ void XYZTestApp::setup()
     _udpServer->open(10552);
 
     _udpServer->getOnDataReceivedSignal().connect([](std::string buff) {
-
         CI_LOG_I("Data signal emitted");
 
-        cout << buff;
-
+        //Populate xyz vector
+        std::vector<std::string> substrings = split(buff, ",");
+        for (int i = 0; i < 3; i++) {
+            xyz[i] = substrings.back();
+            substrings.pop_back();
+        }
     });
 }
 
 void XYZTestApp::update()
 {
+    // Print xyz vector
+    for (auto i : xyz) {
+        cout << i << endl;
+    }
 }
 
 void XYZTestApp::draw()
