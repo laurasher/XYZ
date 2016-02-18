@@ -16,8 +16,8 @@ using asio::ip::udp;
 using namespace soso;
 
 //std::vector<string> xyz(3); //should probably convert to float
-std::vector<float> xyz(3); //should probably convert to float
-
+//std::vector<float> xyz(3); //should probably convert to float
+std::vector<float> xyz(3);
 float dx = 0.0f;
 float vx = 0.0f;
 float dy = 0.0f;
@@ -82,12 +82,14 @@ void XYZTestApp::draw()
     gl::clear(Colorf::black());
     //Put measurements on screen
     //Simple accel vector plot
-    gl::color(Color(1.0f, 0.0f, 0.0f));
-    float vectorLength = 15.0f;
-    float headLength = 6.0f;
-    float headRadius = 6.0f;
+    gl::color(Color(0.0f, 1.0f, 0.0f));
+    float headLength = 8.0f;
+    float headRadius = 8.0f;
 
-    gl::drawVector(vec3(0, 600, 0), vec3(0, 0, 0), headLength, headRadius);
+    int mag = 500;
+    int xorigin = 400;
+    int yorigin = 300;
+    gl::drawVector(ivec3(xorigin, yorigin, 0), ivec3(xorigin + mag * xyz[2], yorigin + mag * xyz[1], mag * xyz[0]), headLength, headRadius);
 }
 
 CINDER_APP(XYZTestApp, RendererGl)
