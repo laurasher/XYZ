@@ -47,6 +47,7 @@ private:
 void XYZTestApp::prepareSettings(Settings *settings)
 {
     settings->setWindowSize(800, 600);
+    settings->setFrameRate(60);
 }
 
 void XYZTestApp::setup()
@@ -62,7 +63,7 @@ void XYZTestApp::setup()
         //Populate xyz vector
         std::vector<std::string> substrings = split(buff, ",");
         for (int i = 0; i < 3; i++) {
-            cout << substrings.back();
+            //            cout << substrings.back();
             xyz[i] = std::stof(substrings.back());
             substrings.pop_back();
         }
